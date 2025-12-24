@@ -27,7 +27,7 @@ dotenv.config({path: envPath});
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './src/tests',
   /*Timeouts*/
   timeout: 30 * 1000,   //Max timeout for test
   expect: {
