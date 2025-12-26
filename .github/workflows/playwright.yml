@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Parallel Docker Tests
 on:
   push:
     branches: [ main, master ]
@@ -8,23 +8,42 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+      browser: [chromium, webkit] #This triggers two parallel jobs on two separate VMs
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-      env:
-        appUserName: ${{secrets.APP_USER_NAME}}
-        appPassword: ${{secrets.APP_USER_PASSWORD}}
+    #- uses: actions/setup-node@v4
+    #Build docker image for each parallel runner.
+    - name: Build Docker image
+      run: docker build -t playwright-tests .
+    
+    #Run test inside Docker container
+    - name: Run playwright tests in Docker
+      run: |
+        docker run \
+          -e appUserName=${{secrets.APP_USER_NAME}} \
+          -e appPassword=${{secrets.APP_USER_PASSWORD}} \
+          -v ${{github.workspace}}/playwright-report:/app/playwright-report \
+          playwright-tests \
+          npx playwright test --project=${{matrix.browser}}
+
+      
+        #node-version: lts/*
+    #- name: Install dependencies
+      #run: npm ci
+    #- name: Install Playwright Browsers
+      #run: npx playwright install --with-deps
+    #- name: Run Playwright tests
+      #run: npx playwright test
+      #env:
+        #appUserName: ${{secrets.APP_USER_NAME}}
+        #appPassword: ${{secrets.APP_USER_PASSWORD}}
+    #Upload unique reports so they don't overwrite each other
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: playwright-report-${{ matrix.browser}}
         path: playwright-report/
         retention-days: 30
