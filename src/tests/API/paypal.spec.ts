@@ -1,29 +1,23 @@
 import {test, expect} from '@playwright/test';
 import {BuyOrderController} from '../../lib/controllers/BuyOrder.controller';
 import {BuyOrder} from '../../lib/models/BuyOrder.model';
+import ByOrderPayLoadJson from '../../data/API/buyOrder.json';
 
 
 test(`Verify Buy Order payload`, async ({request}) => {
     const paypal = new BuyOrderController(request);
+    const buyOrderPayload: BuyOrder = ByOrderPayLoadJson as BuyOrder;
 
-    const buyOrderPayload: BuyOrder = {
-    "intent": "CAPTURE",
-    "purchase_units": [
-        {
-        "amount": {
-            "currency_code": "USD",
-            "value": "10.00"
-        }
-        }
-    ]
-};
+    const response = await test.step(`Create Buy order via API`, async () => {
+        return await paypal.createOrder(buyOrderPayload);
+    });
 
-const response = await paypal.createOrder(buyOrderPayload);
+    await test.step(`Verify API reponse matches 'CREATED' status`, async () => {
+        expect(response.status(), `Response status should be 201`).toBe(201);
 
-//Response validations
-expect(response.status()).toBe(201);
-const body = await response.json();
-expect(body.id).toBeDefined();
-expect(body.status).toBe('CREATED');
-
-})
+         const respBody = await response.json();
+        expect(respBody.id, `Order ID should be present in the response`).toBeDefined();
+        expect(respBody.status, `Order status should be CREATED`).toBe('CREATED');
+        
+    });
+});
