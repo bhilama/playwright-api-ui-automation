@@ -62,7 +62,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testDir: './src/tests/UI',
+      testDir: './src/tests/ui',
       use: { ...devices['Desktop Chrome'] },
     },
 
@@ -73,7 +73,7 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      testDir: './src/tests/UI',
+      testDir: './src/tests/ui',
       use: { ...devices['Desktop Safari'] },
     },
 
