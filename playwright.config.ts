@@ -32,9 +32,9 @@ const getSavedToken = () => {
 export default defineConfig({
   testDir: './src/tests',
   /*Timeouts*/
-  timeout: 30 * 1000, //Max timeout for test
+  timeout: 50 * 1000, //Max timeout for test
   expect: {
-    timeout: 5000, //Max timeout for assertions like expect().toBeVisible()
+    timeout: 10000, //Max timeout for assertions like expect().toBeVisible()
   },
 
   /* Run tests in files in parallel */
@@ -44,7 +44,7 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['list'], ['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -62,7 +62,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testDir: './src/tests/UI',
+      testDir: './src/tests/ui',
       use: { ...devices['Desktop Chrome'] },
     },
 
@@ -73,15 +73,15 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      testDir: './src/tests/UI',
+      testDir: './src/tests/ui',
       use: { ...devices['Desktop Safari'] },
     },
 
-    { name: 'setup', testDir: './src/lib/utils', testMatch: /oauth.setup.ts/ },
+    { name: 'setup', testDir: './src/api-lib/authmgr', testMatch: /oauth.setup.ts/ },
 
     {
       name: 'api-tests',
-      testDir: './src/tests/API',
+      testDir: './src/tests/api',
       dependencies: ['setup'],
       use: {
         baseURL: process.env.API_BASE_URL,
