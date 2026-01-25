@@ -43,6 +43,7 @@ jobs:
       - name: Run Playwright tests in Docker
         run: |
           docker run \
+            -e CI=true \
             -e APP_USER_NAME="${{ secrets.APP_USER_NAME }}" \
             -e APP_PASSWORD="${{ secrets.APP_USER_PASSWORD }}" \
             -e CLIENT_ID="${{ secrets.CLIENT_ID }}" \
