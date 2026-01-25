@@ -4,8 +4,8 @@ PLAYWRIGHT UI AND API AUTOMATION FRAMEWORK
 
 A robust, enterprise-grade automation framework built with Playwright for end-to-end testing of UI and API components. Designed for scalability, maintainability, and CI/CD integration, this framework supports cross-browser testing, API authentication, and comprehensive reporting.
 
-TABLE OF CONTENTS
------------------
+## TABLE OF CONTENTS
+
 - Features
 - Prerequisites
 - Installation
@@ -18,8 +18,8 @@ TABLE OF CONTENTS
 - Troubleshooting
 - License
 
-FEATURES
---------
+## FEATURES
+
 - UI Automation: Page Object Model (POM) for maintainable UI tests with Playwright.
 - API Automation: OAuth2 client credentials flow with token management and storage.
 - Cross-Browser Support: Tests run on Chromium, Firefox, and WebKit.
@@ -30,16 +30,16 @@ FEATURES
 - Parallel Execution: Optimized for CI with retries and parallel workers.
 - Enterprise Practices: Input validation, error handling, retries, and comprehensive documentation.
 
-PREREQUISITES
--------------
+## PREREQUISITES
+
 - Node.js: Version 18.x or higher (LTS recommended).
 - npm: Version 8.x or higher.
 - Git: For cloning the repository.
 - Docker (optional): For containerized execution.
 - Environment Variables: Access to API credentials (e.g., CLIENT_ID, CLIENT_SECRET).
 
-INSTALLATION
-------------
+## INSTALLATION
+
 1. Clone the Repository:
    git clone https://github.com/your-org/PlayWright-UI-Automation.git
    cd PlayWright-UI-Automation
@@ -58,14 +58,16 @@ INSTALLATION
    npm run lint
    npm test -- --dry-run
 
-CONFIGURATION
--------------
+## CONFIGURATION
+
 Environment Files
+
 - Located in src/environments/.
 - Supported environments: DEV.env, SIT.env, UAT.env.
 - Set NODE_ENV to switch (e.g., NODE_ENV=SIT npm test).
 
 Playwright Config
+
 - Main config: playwright.config.ts.
 - Key settings:
   - Test directory: src/tests/
@@ -75,12 +77,14 @@ Playwright Config
   - Projects: Chromium, Firefox, WebKit.
 
 API Authentication
+
 - OAuth2 setup in src/api-lib/authmgr/oauth.setup.ts.
 - Tokens stored in .auth/user.json for reuse.
 
-USAGE
------
+## USAGE
+
 Running Tests
+
 - All Tests:
   npm test
 
@@ -97,10 +101,12 @@ Running Tests
   npx playwright show-report
 
 API Tests
+
 - Located in src/tests/api/.
 - Example: src/tests/api/paypal.spec.ts.
 
 UI Tests
+
 - Located in src/tests/ui/.
 - Example: src/tests/ui/user.validations.spec.ts.
 - Uses fixtures in src/fixtures/app.fixtures.ts for setup/teardown.
@@ -109,8 +115,8 @@ Docker Execution
 docker build -t playwright-automation .
 docker run --rm playwright-automation
 
-PROJECT STRUCTURE
------------------
+## PROJECT STRUCTURE
+
 ```text
 PlayWright-UI-Automation/
   .auth/                          # Directory for storing authentication tokens (e.g., OAuth tokens)
@@ -119,6 +125,16 @@ PlayWright-UI-Automation/
       playwright.yml              # GitHub Actions workflow for running Playwright tests
   .gitignore                      # Specifies files and directories to ignore in Git
   .husky/                         # Pre-commit hooks for code quality checks
+  .lintstagedrc                   # Configuration for lint-staged (runs linters on staged files)
+  .prettierrc                     # Prettier configuration for code formatting
+  CODEOWNERS                      # Defines code owners for review requirements
+  Dockerfile                      # Docker configuration for containerized test execution
+  eslint.config.mjs               # ESLint configuration for TypeScript and Playwright rules
+  node_modules/                   # Installed npm dependencies (auto-generated)
+  package-lock.json               # Lockfile for exact dependency versions
+  package.json                    # Project metadata, scripts, and dependencies
+  playwright-report/              # Generated HTML test reports
+    index.html                    # Main report file for viewing test results
   playwright.config.ts            # Playwright configuration (timeouts, browsers, etc.)
   src/                            # Source code directory
     api-lib/                      # API-related utilities and libraries
@@ -153,16 +169,6 @@ PlayWright-UI-Automation/
       logger.utils.ts             # Centralized logging utility
   test-results/                   # Directory for test execution results and artifacts
   tsconfig.json                   # TypeScript compiler configuration
-  .lintstagedrc                   # Configuration for lint-staged (runs linters on staged files)
-  .prettierrc                     # Prettier configuration for code formatting
-  CODEOWNERS                      # Defines code owners for review requirements
-  Dockerfile                      # Docker configuration for containerized test execution
-  eslint.config.mjs               # ESLint configuration for TypeScript and Playwright rules
-  node_modules/                   # Installed npm dependencies (auto-generated)
-  package-lock.json               # Lockfile for exact dependency versions
-  package.json                    # Project metadata, scripts, and dependencies
-  playwright-report/              # Generated HTML test reports
-    index.html                    # Main report file for viewing test results
 
 TESTING
 -------
@@ -204,3 +210,4 @@ For more help, open an issue or check the Playwright Docs at https://playwright.
 LICENSE
 -------
 This project is licensed under the ISC License. See LICENSE for details.
+```
