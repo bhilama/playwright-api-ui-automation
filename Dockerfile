@@ -13,6 +13,10 @@ USER pwuser
 
 # Force npm to treat /app as its home
 ENV HOME=/app
+ENV NPM_CONFIG_CACHE=/app/.npm
+ENV NPM_CONFIG_PREFIX=/app/.npm-global
+# Added the new global bin to path just in case
+ENV PATH=$PATH:/app/.npm-global/bin
 
 RUN npm ci
 
