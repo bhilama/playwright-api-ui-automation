@@ -1,0 +1,20 @@
+
+# Playwright
+node_modules/
+package-lock.json
+
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+.git
+.gitignore
+
+Dockerfile
+.dockerignore
+
+/playwright/.auth/
+.auth/
+! src/environments/.env.example
+
