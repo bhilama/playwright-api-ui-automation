@@ -11,7 +11,7 @@ COPY --chown=pwuser:pwuser package*.json ./
 # Switch to non-root user before installing dependencies
 USER pwuser
 
-RUN npm ci
+RUN npm --cache /app/.npm ci
 
 COPY --chown=pwuser:pwuser . .
 
